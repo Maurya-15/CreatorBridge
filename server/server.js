@@ -5,22 +5,10 @@ require('dotenv').config();
 
 const app = express();
 
-// Allowed Frontend URLs
-const allowedOrigins = [
-'http://localhost:5173',
-'https://creator-bridge-ten.vercel.app/' // Replace with your actual Vercel URL
-];
-
 // CORS
 app.use(
 cors({
-origin: function (origin, callback) {
-if (!origin || allowedOrigins.includes(origin)) {
-callback(null, true);
-} else {
-callback(new Error('Not allowed by CORS'));
-}
-},
+origin: true,
 credentials: true,
 })
 );
@@ -53,6 +41,7 @@ mongoose
 .connect(process.env.MONGO_URI)
 .then(() => {
 console.log('✅ Connected to MongoDB Atlas');
+
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
